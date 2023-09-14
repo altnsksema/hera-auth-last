@@ -1,11 +1,11 @@
 # hera-auth-last
-Basic Authentication with Node.js
+**Basic Authentication with Node.js**
 
 The goal of project is a provide to create template about authencation in Node.js as package, to user easily. 
 
-Endpoints:
+*Endpoints:*
 
----> Login
+**Login**
 ```
 const login = async (req, res) => {
   const {
@@ -56,7 +56,7 @@ function test(req, res) {
 ```
 
 
----> Register
+**Register**
 ```
 const register = async (req, res) => {
   const {
@@ -86,7 +86,7 @@ const register = async (req, res) => {
 
 
 
----> Auth
+**Auth**
 ```
 
 const auth = (req, res, next) => {
