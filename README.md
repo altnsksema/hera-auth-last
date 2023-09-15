@@ -115,7 +115,7 @@ const auth = (req, res, next) => {
 }
 }
 ```
-**Error Handler**
+**Exceptions**
 
 _*Login Error Handler*_
 
