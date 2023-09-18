@@ -1,0 +1,48 @@
+info: 
+title: Swagger Authencation Template 
+description: This is a project that created authentaication for use easily.
+contact:
+email: altnsksema@gmail.com
+license:
+name: Apache 2.0
+url: http://www.apache.org/licenses/LICENSE-2.0.html
+version: 1.0.0
+---
+paths:
+/auth:
+post:
+tags:
+- login
+summary: user login
+description: providing user login with email and password
+content:
+application/json:
+schema:
+ $ref: '#/components/schemas/Login'
+  application/xml:
+            schema:
+              $ref: '#/components/schemas/Login'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+        responses:
+        '200'
+        description: Successful login!
+        content:
+        application/json:
+        schema:
+        $ref: '#/components/schemas/User'
+         application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+                '400':
+          description: Invalid user
+        '404':
+          description: User not found
+        '405':
+          description: Validation exception
+           security:
+        - petstore_auth:
+            - write: login
+            - read: login
