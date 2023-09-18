@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const loginErrorHandler = require('../exception/exception');
 const registerErrorHandler = require('../exception/exception');
-//const passport = require('passport-google-oauth');
 require('dotenv').config();
 
 const register = async (req, res) => {
