@@ -12,9 +12,9 @@ paths:
 /auth:
 post:
 tags:
-- login
-summary: user login
-description: providing user login with email and password
+- auth
+summary: user info
+description: providing user info for login and register
 content:
 application/json:
 schema:
@@ -44,5 +44,82 @@ schema:
           description: Validation exception
            security:
         - petstore_auth:
+            - write: auth
+            - read: auth
+  /auth/login:
+    get:
+      tags:
+        - login
+      summary: User login
+      description:  providing user login with email and password
+      operationId: 
+      parameters:
+        - name: status
+          in: query
+          description: 
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: available
+            enum:
+              - available
+              - pending
+              - sold
+      responses:
+        '200':
+          description: successful login
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Login'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Login'
+        '400':
+          description: Invalid status value
+      security:
+        - login_auth:
             - write: login
             - read: login
+  /auth/register:
+    get:
+      tags:
+        - register
+      summary:  providing user register with email and password
+      description: 
+      operationId: 
+      parameters:
+        - name: tags
+          in: query
+          description: Tags to filter by
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: successful!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Register'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Register'
+        '400':
+          description: Invalid value
+      security:
+        - auth:
+            - write: register
+            - read: register
