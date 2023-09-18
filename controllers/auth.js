@@ -1,68 +1,88 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require("cors");
 const User = require('../model/user');
-var cookie = require('cookie');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const loginErrorHandler = require('../exception/exception');
+const registerErrorHandler = require('../exception/exception');
+//const passport = require('passport-google-oauth');
 require('dotenv').config();
 
-
-
 const register = async (req, res) => {
-    const { email, password } = req.body;
+  const {
+    name,
+    surname,
+    email,
+    password
+  } = req.body;
 
-    try {
-        const newUser = new User({
-            email,
-            password
-        });
-        const savedUser = await newUser.save();
-        res.json(savedUser);
-    } catch(err){
-        console.error(err);
-        res.status(500).json({
-            error: "Failed. Not saved."
-        });
-    };
-    console.log("register");
-   
-    console.log(req.body)
+  registerErrorHandler();
+
+  const newUser = new User({
+    name,
+    surname,
+    email,
+    password
+  });
+  const savedUser = await newUser.save();
+  res.json(savedUser);
+
+  console.log("Enrolled.");
+  console.log(req.body)
 };
 
-const login = async(req, _res) => {
-    const { email, password } = req.body;
+const login = async (req, res) => {
+  const {
+    name,
+    surname,
+    email,
+    password
+  } = req.body;
 
-      const user = await User.findOne({ email: email })
-      console.log(user)
+  loginErrorHandler();
 
+  const user = await User.findOne({
+    email
+  })
+  console.log(user)
 
-      if (user) {
-        const secret = "DZR'0HvZk}2#;V4,~;8jnWugtLfk#i`}}ey@O|=.?dWjmb)rv}Tt/5L^UBkN+_A";
-        const auth = await bcrypt.compare(password, user.password);
-        console.log(auth)
-        const token = jwt.sign({user}, secret); 
+  if (!user) {
+    return res.status(401).json({
+      message: 'Not found user in email.'
+    })
+  }
 
-        if (auth) {
-            _res.cookie("jsonwebtoken", token, 
-            {
-              httpOnly: true,
-              secure: true,
-              maxAge: 1000 * 60 * 60 * 24,
-             
-            });
-          _res.send(token);
-        }else{
-          throw Error('incorrect password');
-        }  
-      }else{
-        throw Error('incorrect email');
-      }
-      
-    };
+  const passwordCorrect = await bcrypt.compare(password, user.password);
+  console.log(passwordCorrect)
+  const token = jwt.sign({
+    user
+  }, process.env.SECRET_KEY);
+
+  if (!passwordCorrect) {
+    return res.status(401).json({
+      message: 'Incorrect password.'
+    })
+  }
+
+  res.cookie("jwt", token, {
+    httpOnly: true,
+    secure: req.true,
+    maxAge: 1000 * 60 * 60 * 24,
+  });
+
+  res.send({
+    status: 'success',
+    message: 'Login successfull!'
+  });
+};
+
+function test(req, res) {
+  res.send({
+    status: 400
+  })
+}
+
 
 module.exports = {
-    register,
-    login
+  register,
+  login,
+  test
 };
-
