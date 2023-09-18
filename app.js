@@ -3,29 +3,28 @@ const authRoute = require('./routes/auth')
 const mongoose = require('mongoose')
 const cors = require("cors");
 const app = express();
+const cookieParser = require('cookie-parser');
+const errorHandler = require('errorhandler');
 
 app.use(express.json());
+
+app.use(cookieParser());
 
 app.use(cors());
 
-app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
-
-app.get("/",(req,res)=>{
-  res.send("get");
-});
 
 app.use('/auth', authRoute)
 
+app.use('/auth/login', errorHandler.loginErrorHandler);
+app.use('/auth/register', errorHandler.registerErrorHandler);
+
+app.use(errorHandler.errorHandler);
 
 
-const secret2 = "DZR'0HvZk}2#;V4,~;8jnWugtLfk#i`}}ey@O|=.?dWjmb)rv}Tt/5L^UBkN+_A";
-
-
-mongoose.connect("mongodb+srv://root:toor@authservice.gtp3lbh.mongodb.net/?retryWrites=true&w=majority").then(()=>{
+mongoose.connect(process.env.DB_URL).then(()=>{
     console.log('db connect')
-    app.listen(3000)
+    app.listen(process.env.DB_PORT)
 }).catch((err)=>{
   console.log(err)
 })
