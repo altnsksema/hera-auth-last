@@ -16,11 +16,11 @@ const GetOneUserById = async (req, res) => {
 const createUser = async (req, res) => {
     const user = await user.save();
 
+    res.json({
+        user
+    });
 };
 
-res.json({
-    user
-});
 
 
 

@@ -6,7 +6,6 @@ const authController2 = require('../controllers/userController');
 router.post('/register', authController.register)
 router.post('/login', authController.login)
 router.get('/test',auth, authController.test)
-router.use(errorHandler);
 
 /*router.get('/allUsers', authController2.GetAllUsers)
 router.get('/oneUser', authController2.GetOneUserById) 
