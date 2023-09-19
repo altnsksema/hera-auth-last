@@ -4,6 +4,7 @@ const cors = require("cors");
 const app = express();
 const bcrypt = require('bcryptjs');
 const {
+  isPassword,
   isEmail
 } = require('validator');
 
@@ -22,12 +23,15 @@ const user = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
+    required: true,
     lowercase: true,
     validate: [isEmail]
   },
   password: {
     type: String,
     unique: true,
+    required: true,
+    validate: [isPassword]
   }
 }, {
   timestamps: true
@@ -37,7 +41,16 @@ var validator = require('validator');
 
 validator.isEmail('foo@bar.com');
 
-validator.isPassword('Deneme.12')
+validator.isPassword('Deneme.1')
+
+isPassword(isPassword, {
+  minLength: 6,
+  minLowercase: 1,
+  minUppercase: 1,
+  minNumbers: 1,
+  minSymbols: 1,
+  returnScore: false,
+})
 
 console.log('');
 
