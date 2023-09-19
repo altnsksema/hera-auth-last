@@ -37,6 +37,8 @@ var validator = require('validator');
 
 validator.isEmail('foo@bar.com');
 
+validator.isPassword('Deneme.12')
+
 console.log('');
 
 user.pre('save', async function (next) {
