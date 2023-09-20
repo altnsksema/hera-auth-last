@@ -14,14 +14,14 @@ app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(validator());
+//app.use(validator());
 
 app.use('/auth', authRoute)
 
-app.use('/auth/login', errorHandler.loginErrorHandler);
-app.use('/auth/register', errorHandler.registerErrorHandler);
+// app.use('/auth/login', errorHandler.loginErrorHandler);
+// app.use('/auth/register', errorHandler.registerErrorHandler);
 
-app.use(errorHandler.errorHandler);
+app.use(errorHandler);
 
 //app.set("view engine", "jade");
 
