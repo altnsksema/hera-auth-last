@@ -1,6 +1,4 @@
 function errorHandler(err, req, res, next) {
-  //console.error(err.stack);
-
   if (err) {
     res.status(err.status).json({
       message: err.message

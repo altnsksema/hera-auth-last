@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require("cors");
 const app = express();
 const bcrypt = require('bcryptjs');
 const {
@@ -41,7 +40,7 @@ var validator = require('validator');
 
 validator.isEmail('foo@bar.com');
 
-validator.isPassword('Deneme.1')
+
 
 isPassword(isPassword, {
   minLength: 6,
@@ -52,7 +51,7 @@ isPassword(isPassword, {
   returnScore: false,
 })
 
-console.log('');
+validator.isPassword('Deneme.12');
 
 user.pre('save', async function (next) {
   const salt = await bcrypt.genSalt();

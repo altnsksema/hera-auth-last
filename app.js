@@ -14,6 +14,8 @@ app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 
+app.use(validator());
+
 app.use('/auth', authRoute)
 
 app.use('/auth/login', errorHandler.loginErrorHandler);
