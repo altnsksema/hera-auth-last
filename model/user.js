@@ -3,15 +3,17 @@ const mongoose = require('mongoose');
 const app = express();
 const bcrypt = require('bcryptjs');
 const {
-  isPassword,
-  isEmail
+  isEmail,
+  isPassword
 } = require('validator');
+var passwordValidator = require('password-validator');
 
 
 const user = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    unique: true
   },
 
   surname: {
@@ -24,13 +26,13 @@ const user = new mongoose.Schema({
     unique: true,
     required: true,
     lowercase: true,
-    validate: [isEmail]
+    validate: isEmail
   },
   password: {
     type: String,
     unique: true,
     required: true,
-    validate: [isPassword]
+    validator: isPassword
   }
 }, {
   timestamps: true
@@ -40,18 +42,29 @@ var validator = require('validator');
 
 validator.isEmail('foo@bar.com');
 
+var schema = new passwordValidator();
+
+schema
+.is().min(8)                                   
+.is().max(20)                                  
+.has().uppercase()                              
+.has().lowercase()                            
+.has().digits(2)                              
+.has().not().spaces()                          
+.is().not().oneOf(['Passw0rd', 'Password123']);
 
 
-isPassword(isPassword, {
+
+/*validator(isPassword, {
   minLength: 6,
   minLowercase: 1,
   minUppercase: 1,
   minNumbers: 1,
   minSymbols: 1,
   returnScore: false,
-})
+});
+*/
 
-validator.isPassword('Deneme.12');
 
 user.pre('save', async function (next) {
   const salt = await bcrypt.genSalt();
