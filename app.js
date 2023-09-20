@@ -18,8 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/auth', authRoute)
 
-// app.use('/auth/login', errorHandler.loginErrorHandler);
-// app.use('/auth/register', errorHandler.registerErrorHandler);
+/* app.use('/auth/login', errorHandler.loginErrorHandler);
+app.use('/auth/register', errorHandler.registerErrorHandler); */
 
 app.use(errorHandler);
 

@@ -13,7 +13,7 @@ const register = async (req, res) => {
     password
   } = req.body;
 
-  registerErrorHandler();
+  
 
   const newUser = new User({
     name,
@@ -36,7 +36,7 @@ const login = async (req, res) => {
     password
   } = req.body;
 
-  loginErrorHandler();
+ 
 
   const user = await User.findOne({
     email

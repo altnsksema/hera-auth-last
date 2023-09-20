@@ -18,4 +18,4 @@ router.get('/oneUser', authController2.GetOneUserById)
 router.put('/allUsers/userID', authController2.updateUser)
 router.delete('/allUsers/userID', authController2.deleteUser)
 
-module.exports = router;
+module.exports = router; 
