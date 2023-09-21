@@ -5,6 +5,7 @@ const cors = require("cors");
 const app = express();
 const cookieParser = require('cookie-parser');
 const errorHandler = require('errorhandler');
+var connect = require('connect');
 
 app.use(express.json());
 
@@ -21,7 +22,9 @@ app.use('/auth', authRoute)
 /* app.use('/auth/login', errorHandler.loginErrorHandler);
 app.use('/auth/register', errorHandler.registerErrorHandler); */
 
-app.use(errorHandler);
+//app.use(errorHandler);
+
+app.use(connect.errorHandler());
 
 //app.set("view engine", "jade");
 
