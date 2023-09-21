@@ -46,5 +46,6 @@ module.exports = {
     updateUser,
     deleteUser,
     GetOneUserById,
+    createUser
 
 }
