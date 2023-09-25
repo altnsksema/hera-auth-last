@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const app = express();
 const bcrypt = require('bcryptjs');
 const {
   isEmail,
@@ -30,7 +29,6 @@ const user = new mongoose.Schema({
   },
   password: {
     type: String,
-    unique: true,
     required: true,
     validator: isPassword
   }

@@ -5,37 +5,44 @@ const loginErrorHandler = require('../exception/exception');
 const registerErrorHandler = require('../exception/exception');
 require('dotenv').config();
 
-const register = async (req, res) => {
-  const {
-    name,
-    surname,
-    email,
-    password
-  } = req.body;
-
+const register = async (req, res, next) => {
+  try {
+    const {
+      name,
+      surname,
+      email,
+      password
+    } = req.body;
   
-
-  const newUser = new User({
-    name,
-    surname,
-    email,
-    password
-  });
-  const savedUser = await newUser.save();
-  res.json(savedUser);
-
-  console.log("Enrolled.");
-  console.log(req.body)
+    
+  
+    const newUser = new User({
+      name,
+      surname,
+      email,
+      password
+    });
+    const savedUser = await newUser.save();
+    res.json(savedUser);
+  
+    console.log("Enrolled.");
+    console.log(req.body)
+  } catch (err) {
+    next(err)
+  }
 };
 
 const login = async (req, res) => {
   const {
-    name,
-    surname,
     email,
     password
   } = req.body;
 
+  if (!email || !password) {
+    res.status(401).json({
+      message: 'Please provide an email and a password'
+    })
+  }
  
 
   const user = await User.findOne({

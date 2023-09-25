@@ -1,5 +1,4 @@
 const express = require('express')
-const errorHandler = require('errorhandler')
 const {auth} = require('../middleware/authMiddleware');
 const router = express.Router()
 
@@ -14,8 +13,8 @@ router.get('/test',auth, authController.test)
 router.use('/error', authController3.errorHandler);
 
 router.get('/allUsers', authController2.GetAllUsers)
-router.get('/oneUser', authController2.GetOneUserById) 
-router.put('/allUsers/userID', authController2.updateUser)
-router.delete('/allUsers/userID', authController2.deleteUser)
+router.get('/oneUser/:id', authController2.GetOneUserById) 
+router.put('/allUsers/:id', authController2.updateUser)
+router.delete('/allUsers/:id', authController2.deleteUser)
 
-module.exports = router; 
+module.exports = router;

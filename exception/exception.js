@@ -1,13 +1,19 @@
   function errorHandler(err, req, res, next) {
-  if (err) {
+    if (err.name === 'CastError') {
+      error = handleCastErrorDB(err)
+  } else if (err.code === 11000) {
+      error = handleDuplicateFieldsErrorDB(err)
+  } else if (err.name === 'ValidationError') {
+      error = handleValidationErrorDB(err)
+  } else if (err.name === 'JsonWebTokenError') {
+      error = jwtError
+  } else if (err.name === 'TokenExpiredError') {
+      error = jwtExpiredError
+  }
     res.status(err.status).json({
       message: err.message
     });
-  } else {
-    res.status(500).json({
-      message: 'Try again! Error occurred.'
-    });
-  }
+
 }
 
 function registerErrorHandler(err, req, res, next) {

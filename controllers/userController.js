@@ -1,20 +1,24 @@
-const GetAllUsers = async (req, res) => {
-    const user = await user.find();
+const User = require('../model/user')
+
+const getAllUsers = async (req, res) => {
+    const users = await User.find().select('name surname');
+
     res.json({
-        user
+        status: 'success',
+        results: users.length,
+        users
     });
 };
 
-const GetOneUserById = async (req, res) => {
-    const userId = req.params.id;
-    const user = await NodeIterator.findById(userId);
+const getOneUserById = async (req, res) => {
+    const user = await User.findById(req.params.id);
     res.json({
         user
     });
 };
 
 const createUser = async (req, res) => {
-    const user = await user.save();
+    const user = await User.save();
 
     res.json({
         user
@@ -25,7 +29,7 @@ const createUser = async (req, res) => {
 
 
 const updateUser = async (req, res) => {
-    const userId = req.params.userId;
+    const userId = req.params.id;
 
     const user = await user.findByIdAndUpdate(userId);
     res.json({
@@ -34,7 +38,7 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-    const userId = req.params.userId;
+    const userId = req.params.id;
     const user = await user.deleteOne({
         id: userId
     });
@@ -42,10 +46,10 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
-    GetAllUsers,
+    GetAllUsers: getAllUsers,
     updateUser,
     deleteUser,
-    GetOneUserById,
+    GetOneUserById: getOneUserById,
     createUser
 
 }
