@@ -1,4 +1,4 @@
-  function errorHandler(err, req, res, next) {
+function errorHandler(err, req, res, next) {
     if (err.name === 'CastError') {
       error = handleCastErrorDB(err)
   } else if (err.code === 11000) {
@@ -14,65 +14,60 @@
       message: err.message
     });
 
-}
 
-function registerErrorHandler(err, req, res, next) {
-  const {
-    name,
-    surname,
-    email,
-    password
-  } = req.body;
-
-  if (!name) {
-    res.send("Name is required.")
-  } else {
-    if (!surname) {
-      res.send("Surname is required.")
+    const {
+      name,
+      surname,
+      email,
+      password
+    } = req.body;
+  
+    
+  
+    if (!email || !password) {
+      const err = new Error(400, 'Must be email and password.');
+      next(err);
     } else {
-      res.send(200);
+      next();
     }
-  }
 
-  if (!email || !password) {
-    const err = new Error(400, 'Must be email and password.');
-    next(err);
-  } else {
-    next();
-  }
 }
 
-
-function loginErrorHandler(err, req, res, next) {
-  const {
-    name,
-    surname,
-    email,
-    password
-  } = req.body;
+// function registerErrorHandler(err, req, res, next) {
+  
+// }
 
 
-  if (!name) {
-    res.send("Name is required.")
-  } else {
-    if (!surname) {
-      res.send("Surname is required.")
-    } else {
-      res.send(200);
-    }
-  }
+// function loginErrorHandler(err, req, res, next) {
+//   const {
+//     name,
+//     surname,
+//     email,
+//     password
+//   } = req.body;
 
-  if (!email || !password) {
-    const err = new CustomError(400, 'Must be email and password.');
-    console.log(err);
-    next(err);
-  } else {
-    next();
-  }
-}
+
+//   if (!name) {
+//     res.send("Name is required.")
+//   } else {
+//     if (!surname) {
+//       res.send("Surname is required.")
+//     } else {
+//       res.send(200);
+//     }
+//   }
+
+//   if (!email || !password) {
+//     const err = new CustomError(400, 'Must be email and password.');
+//     console.log(err);
+//     next(err);
+//   } else {
+//     next();
+//   }
+// }
 
 module.exports = {
   errorHandler,
-  registerErrorHandler,
-  loginErrorHandler
+  // registerErrorHandler,
+  // loginErrorHandler
 };
