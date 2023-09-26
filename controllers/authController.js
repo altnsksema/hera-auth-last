@@ -42,21 +42,17 @@ const register = async (req, res, next) => {
   
 };
 
-const login = async (req, res, next) => {
-  try {
+const login = async (req, res,) => {
   const {
     email,
     password
   } = req.body;
 
-  // if (!email || !password) {
-  //   res.status(401).json({
-  //     message: 'Please provide an email and a password'
-  //   })
-  // }
-} catch (err) {
-  next(err)
-}
+  if (!email || !password) {
+    res.status(401).json({
+      message: 'Please provide an email and a password'
+    })
+  }
  
 
   const user = await User.findOne({
